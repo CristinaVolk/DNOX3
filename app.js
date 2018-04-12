@@ -1,19 +1,21 @@
 const express = require('express');
-//const app = express();
+const app = express();
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
-var book = require('./routes/book');
-var app = express();
-
+const book = require('./routes/book');
+const databaseController = require('./controllers/databaseController');
+databaseController.open();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/books', express.static(path.join(__dirname, 'dist')));
 app.use('/book', book);
+
 
 
 
