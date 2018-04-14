@@ -2,7 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const router = express.Router();
+const bcrypt = require ('bcryptjs');
 const User = require('./../controllers/databaseController').get().model('User');
+const jwt = require('jsonwebtoken');
+const CONFIG = require('./../controllers/config.js');
 
 
 router.get('/', async (req, res)=>{
@@ -40,9 +43,24 @@ router.post('/register',  (req, res) => {
            res.status(200).json('the user with that email is already registered');
       }
       if(!us){
-        let user =  new User(req.body).save();
-        console.log(user);
-        res.json(user);
+      bcrypt.genSalt(10, (err, salt)=>{
+        bcrypt.hash(password, salt, (error, hash)=>{
+          if (err) console.log(err);
+          let user =  new User({
+          name,
+          surname,
+          email,
+          password:hash}).save((err, result)=>{
+            if (err) {
+              console.log(err);
+              return;
+            } else {
+              console.log(result);
+              res.json(result);
+            }
+          });
+        })
+      })
       }
     })
   }
@@ -64,47 +82,20 @@ router.post('/login', (req, res)=>{
       res.status(400).json(err);
     }
      if(user) {
-   res.status(200).json({success: true, message: "Zaletaj w dno k elite"})
- } else {
+       if (bcrypt.compareSync(password, user.password)){
+         jwt.sign({ id: user._id, name: user.name }, CONFIG.HASH_PASSWORD_SECRET, { expiresIn: '900000s' },  (err, token) => {
+         res.status(200)
+           .json({user,token})
+         });
+     }
+     else {
+      res.status(200).json({sucess: false, message: 'no hash, cannot log in'});
+    }
+  }
+  else {
    res.status(200).json({success: false, message: "wrong data provided, cannot log in"})
  }
 });
 });
 
-
-
-
-/*
-
-  User.findOne({
-   email:email
- }, (err, user) => {
-   console.log('aa')
-   if (err){
-     console.log(err);
-     res.status(400).json('error registering the user');
-   }
-    if(user) {
-      res.status(200).json('the user with that email is already registered');
- } if (!user){
-         let newUser = new User({
-
-         name,
-         surname,
-         email,
-         password
-         });
-         newUser.save(function(err, result){
-           console.log('bb');
-           if(error){
-             console.log(err);
-             return;
-           } else {
-             res.json(result)
-                //TODO: redirect to the login view when it's made
-         }
-       });
-  });
-   })
- });*/
 module.exports = router;
