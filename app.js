@@ -1,4 +1,5 @@
 const express = require('express');
+const expressValidator = require('express-validator');
 const app = express();
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -6,18 +7,20 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const book = require('./routes/book');
+
 const databaseController = require('./controllers/databaseController');
 databaseController.open();
+
+
+const book = require('./routes/book');
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
+app.use(expressValidator());
 app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/books', express.static(path.join(__dirname, 'dist')));
 app.use('/book', book);
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -34,7 +37,8 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  console.log(err);
+  res.json('error!');
 });
 
 

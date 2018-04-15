@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 //var bcrypt = require('bcryptjs');
-var Schema = mongoose.Schema;
+let Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
   name:{
@@ -25,5 +25,8 @@ const UserSchema = new Schema({
   }
 });
 
-const User = module.exports = mongoose.model('User', UserSchema, 'User');
- module.exports=UserSchema;
+
+const connectWithDB = (connection) => {
+  const User = connection.model('User', UserSchema, 'User');
+}
+ module.exports = connectWithDB;
