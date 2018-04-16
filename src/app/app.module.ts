@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient,HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -14,6 +14,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
+import { TokenInterceptor } from './auth/token.interceptor';
+import { AuthService } from './auth/auth.service';
 
 const appRoutes: Routes =[
   { 
@@ -46,7 +48,12 @@ const appRoutes: Routes =[
   imports: [
     BrowserModule, RouterModule.forRoot(appRoutes),FormsModule,ReactiveFormsModule,HttpClientModule
   ],
-  providers: [UserRepository],
+  providers: [UserRepository,AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,6 +3,7 @@ import { NgForm} from '@angular/forms';
 import { UserRepository } from '../models/user.repository';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   	selector: 'app-signup',
@@ -12,14 +13,14 @@ import { Router } from '@angular/router';
 export class SignupComponent {
     private user: User;
     
-	  constructor(private userRepository: UserRepository, private router: Router) {
+	  constructor(private userRepository: UserRepository, private router: Router, private authService: AuthService) {
 
      }
  	 onSubmit(form: NgForm){
 		var data = form.form.controls;
 		this.user = new User(data.name.value, data.surname.value, data.email.value, data.password.value);
     	this.userRepository.createUser(this.user).subscribe(data=> {
-        
+        localStorage.setItem('token',data.token);
         this.userRepository.selectedUser(data.user);
         this.router.navigate(['']);
         console.log("registered");
