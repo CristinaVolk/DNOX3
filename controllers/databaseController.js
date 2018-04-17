@@ -23,12 +23,12 @@ let open = function() {
                   console.log("error", "DB connection error");
               });
               mongoose.Promise = global.Promise;
-              userModel(_connection); //here you will add another models
-
+              flatModel(_connection); 
+              userModel(_connection);
 
 };
 
-let get = function() {
+let get = () => {
   return _connection;
 };
 
