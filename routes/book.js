@@ -6,6 +6,7 @@ const bcrypt = require ('bcryptjs');
 const User = require('./../controllers/databaseController').get().model('User');
 const jwt = require('jsonwebtoken');
 const CONFIG = require('./../controllers/config.js');
+const UserController = require('./../controllers/userController.js');
 
 
 router.get('/', async (req, res)=>{
@@ -26,7 +27,7 @@ router.post('/register',  (req, res) => {
   req.checkBody('email', 'Email is required').notEmpty();
   req.checkBody('email', 'Email is not valid').isEmail();
   req.checkBody('password', 'Password is required').notEmpty();
-  req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+  //req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
   req.checkBody('isAdmin').optional();
 
   let errors = req.validationErrors();
@@ -67,13 +68,14 @@ router.post('/register',  (req, res) => {
 });
 
 router.post('/login', (req, res)=>{
-  var email = req.body.email;
+  var email = req.body.email.toLowerCase();
   var password = req.body.password;
 
   req.checkBody('email', 'Email is required').notEmpty();
   req.checkBody('email', 'Email is not valid').isEmail();
   req.checkBody('password', 'Password is required').notEmpty();
 
+  console.log(email);
   User.findOne({
     email:email
   }, (err, user)=>{
@@ -85,17 +87,30 @@ router.post('/login', (req, res)=>{
        if (bcrypt.compareSync(password, user.password)){
          jwt.sign({ id: user._id, name: user.name }, CONFIG.HASH_PASSWORD_SECRET, { expiresIn: '900000s' },  (err, token) => {
          res.status(200)
-           .json({user,token})
+           .json({user,token,success: true})
          });
      }
      else {
-      res.status(200).json({sucess: false, message: 'no hash, cannot log in'});
+      res.status(200).json({success: false, message: 'no hash, cannot log in'});
     }
   }
   else {
    res.status(200).json({success: false, message: "wrong data provided, cannot log in"})
  }
 });
+});
+
+router.get('/me',UserController.isAuthentic, function(req, res, next) {
+  
+  User.findById(req.userId, { password: 0 }, function (err, user) {
+    if (err) return res.status(500).send("There was a problem finding the user.");
+    if (!user) return res.status(404).send("No user found."); 
+    else return res.status(200).send(user);
+  });  
+});
+
+router.get('/logout', function(req, res) {
+  res.status(200).send({ auth: false, token: null });
 });
 
 module.exports = router;
