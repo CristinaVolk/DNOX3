@@ -43,6 +43,7 @@ module.exports.isAuthentic = (req,res,next) => {
   } */
   console.log(req.headers);
   var token = req.headers['authorization'];
+  console.log(req.headers);
   if (!token)
     return res.status(403).send({ auth: false, message: 'No token provided.' });
   jwt.verify(token, CONFIG.HASH_PASSWORD_SECRET, function(err, decoded) {

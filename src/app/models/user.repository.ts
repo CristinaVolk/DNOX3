@@ -2,13 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {User} from './user.model';
 import { Observable } from "rxjs/Observable";
-   
+import { AuthService } from '../auth/auth.service';
+
 @Injectable()
 export class UserRepository {
     public selectedUser: any; 
     private users: any = [];
-    constructor(private http: HttpClient) {
-        this.http.get('/me').subscribe(data => {
+    constructor(private http: HttpClient, private auth: AuthService) {
+        this.http.get('/me',).subscribe(data => {
             if(data != null) {
                 this.selectedUser = data;
             }else {
@@ -35,7 +36,8 @@ export class UserRepository {
     }
 
     isAuth() {
-        return this.selectedUser == null? false: true;
+        
+        return (this.selectedUser == null && !this.auth.isAuthenticated())?  false: true;
     }
 
     logout() {
