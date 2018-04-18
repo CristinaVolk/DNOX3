@@ -13,6 +13,7 @@ databaseController.open();
 
 
 const book = require('./routes/book');
+const flatRoutes = require('./routes/flatRoutes');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/books', express.static(path.join(__dirname, 'dist')));
 app.use('/', book);
+app.use('/', flatRoutes);
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
