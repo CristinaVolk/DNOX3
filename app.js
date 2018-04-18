@@ -1,18 +1,17 @@
 const express = require('express');
-const expressValidator = require('express-validator');
 const app = express();
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-
 
 const databaseController = require('./controllers/databaseController');
 databaseController.open();
 
-
 const book = require('./routes/book');
+const flatRoutes = require('./routes/flatRoutes');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -21,6 +20,7 @@ app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/books', express.static(path.join(__dirname, 'dist')));
 app.use('/', book);
+app.use('/', flatRoutes);
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
