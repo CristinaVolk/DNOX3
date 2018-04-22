@@ -24,7 +24,7 @@ let open = function() {
               });
               mongoose.Promise = global.Promise;
               flatModel(_connection);
-              userModel(_connection);
+              userModel(_connection); //show me the problem
 
 };
 

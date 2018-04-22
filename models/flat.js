@@ -1,7 +1,14 @@
 const mongoose = require('mongoose');
 //var bcrypt = require('bcryptjs');
 let Schema = mongoose.Schema;
-
+const RoomSchema = new Schema({
+  title:String,
+  number:Number,
+  description:String,
+  price:Number,
+  number_of_rooms:Number,
+  number_of_free_rooms:Number
+});
 const FlatSchema = new Schema({
   location:{
     type: String,
@@ -19,7 +26,7 @@ const FlatSchema = new Schema({
     type: String,
     required: true,
   },
-  Rooms:[String]
+  Rooms:[RoomSchema]
 });
 
 
