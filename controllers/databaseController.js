@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 const userModel = require('./../models/user');
+const flatModel = require('./../models/flat');
 const CONFIG=require('./config');
- //to powinno być w pliku konfiguracyjnym
-//nie używaj czystego MongoDB , lepiej Mongoose, juz naprawiam, dlatego async nie działał:P bo to czysty MongoDB, nie ma promise
+
 let _connection = null;
 
 let open = function() {
 
-  _connection = mongoose.createConnection(CONFIG.DB_URL, {    
+  _connection = mongoose.createConnection(CONFIG.DB_URL, {
     auth:{
       password: CONFIG.DB_URL_AUTH.PASSWORD,
       user:CONFIG.DB_URL_AUTH.USER
@@ -23,8 +23,8 @@ let open = function() {
                   console.log("error", "DB connection error");
               });
               mongoose.Promise = global.Promise;
-              flatModel(_connection); 
-              userModel(_connection);
+              flatModel(_connection);
+              userModel(_connection); //show me the problem
 
 };
 
