@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const userModel = require('./../models/user');
+const flatModel = require('./../models/flat');
 const CONFIG=require('./config');
  //to powinno być w pliku konfiguracyjnym
 //nie używaj czystego MongoDB , lepiej Mongoose, juz naprawiam, dlatego async nie działał:P bo to czysty MongoDB, nie ma promise
