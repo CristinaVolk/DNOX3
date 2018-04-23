@@ -56,7 +56,7 @@ export class AddFlatComponent implements OnInit {
 
 
   ngOnInit() {
-    this.rooms.push(new Room("Room 1"));
+
   }
 
 }
