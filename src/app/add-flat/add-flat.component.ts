@@ -3,6 +3,7 @@ import {Room} from '../models/room.model';
 import {Flat} from '../models/flat.model';
 import {FlatRepository} from '../models/flat.repository';
 import { NgForm} from '@angular/forms';
+import { Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-flat',
@@ -14,7 +15,7 @@ export class AddFlatComponent implements OnInit {
   private flat: Flat={};
   private rooms: Room[]=[];
 
-  constructor(private rep: FlatRepository) { 
+  constructor(private rep: FlatRepository, private router: Router) { 
     
   }
 
@@ -51,7 +52,8 @@ export class AddFlatComponent implements OnInit {
     console.log(this.flat);
     	this.rep.addFlat(this.flat).subscribe(data=> {
         console.log(data);
-    	});
+      });
+      this.router.navigate(['']);
   	}
 
 

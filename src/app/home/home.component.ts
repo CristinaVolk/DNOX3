@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FlatRepository} from '../models/flat.repository';
 
 @Component({
   selector: 'app-home',
@@ -7,27 +8,40 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-includeShipped = false;
 public productsPerPage = 4;
 public selectedPage = 1;
 
-constructor() {}
+private flats: any[]= [];
 
-getOrders(): any[] {
-  return;
- /*  let pageIndex = (this.selectedPage - 1) * this.productsPerPage
-return this.repository.getProducts(this.selectedCategory)
-.slice(pageIndex, pageIndex + this.productsPerPage); */
+constructor(private rep: FlatRepository) {
+  
 }
 
-markShipped() {
-
+loadFlats(){
+  this.rep.getFlats().subscribe(res=>{
+    this.flats=res;
+    console.log(this.flats);
+    }
+  );
 }
 
-delete(id: number) {
+ getflats(): any[] {
+  if(this.flats!=null){
+    let pageIndex = (this.selectedPage - 1) * this.productsPerPage;
+    return this.flats.slice(pageIndex, pageIndex + this.productsPerPage); 
+  }
+} 
 
+delete(flat) {
+  this.rep.deleteFlat(flat).subscribe(res=>{
+    console.log(res);
+    });
+  this.flats.splice(this.flats.findIndex(p => p._id == flat._id),1);
 }
-ngOnInit(){}
+
+ngOnInit(){
+  this.loadFlats();
+}
 
 changePage(newPage: number) {
   this.selectedPage = newPage;
@@ -39,10 +53,8 @@ changePageSize(newSize: number) {
 }
 
 get pageNumbers(): any[] {
-    return;
-  /* return Array(Math.ceil(this.repository
-  .getProducts(this.selectedCategory).length / this.productsPerPage))
-  .fill(0).map((x, i) => i + 1); */
+   return Array(Math.ceil(this.flats.length / this.productsPerPage))
+  .fill(0).map((x, i) => i + 1); 
   }
 
 }
