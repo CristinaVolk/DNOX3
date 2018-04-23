@@ -5,7 +5,7 @@
   <thead  class="thead-dark">
     <tr><th scope="col">Address</th>
       <th scope="col">Description</th>
-      <th scope="col" >Rooms</th>
+      <th scope="col" colspan="5" >Rooms</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
@@ -13,8 +13,8 @@
     <tr *ngIf="(flats.length==0);else table">
       <td colspan="8">There are no orders</td>
     </tr>
-    <ng-template #table>
-      <div *ngFor="let o of getflats()">
+    <ng-template #table ngFor let-o [ngForOf]="getflats()">
+      
         <tr>
               <td>{{o.location}} {{o.street}} {{o.number}}</td>
               <td>{{o.description}}</td>
@@ -37,8 +37,7 @@
             <td>{{room.price}}</td>
             <td>{{room.number_of_free_rooms}}/{{room.number_of_rooms}}</td>
             </tr>
-      </div>
-    
+      
   </ng-template>
   </tbody>
 
