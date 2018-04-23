@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Room} from './room.model';
 import {Flat} from './flat.model';
 import { Observable } from "rxjs/Observable";
-
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class FlatRepository {
@@ -13,13 +13,10 @@ export class FlatRepository {
         
     }
 
-    getFlats(){
-        this.http.get('/flats',).subscribe(data => {
-            if(data != null) {
-               return data;
-            }else {
-                return null;
-            }
+    getFlats(): Observable<any> { 
+        return this.http.get('/flats').map(data => {
+            console.log(data);
+            return data;
         });
     }
 
@@ -31,8 +28,11 @@ export class FlatRepository {
         return this.http.put('/flat/'+flat._id, flat); 
     }
 
-    deleteFlat(flat: any){
-        return this.http.delete('/flat/'+flat._id); 
+    deleteFlat(flat: any): Observable<any>{
+        return this.http.delete('/flat/'+flat._id).map(data => {
+            console.log(data);
+            return data;
+        });; 
     }
 
     getFlatRooms(flat: any){

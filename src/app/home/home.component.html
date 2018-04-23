@@ -1,35 +1,47 @@
 <div class="container">
-    <a class="btn btn btn-outline-primary mt-1" routerLink="addflat" ><span class="fa fa-plus"></span> Add Flat</a>
+    <a class="btn btn-outline-primary mx-2 my-2 float-right" routerLink="addflat" ><span class="fa fa-plus"></span> Add Flat</a>
 
-  <!-- <table class="table table-sm">
-  <thead>
-  <tr><th>Name</th><th>Zip</th><th colspan="2">Cart</th><th></th></tr>
+<table class="table">
+  <thead  class="thead-dark">
+    <tr><th scope="col">Address</th>
+      <th scope="col">Description</th>
+      <th scope="col" colspan="5" >Rooms</th>
+      <th scope="col">Actions</th>
+    </tr>
   </thead>
   <tbody>
-  <tr *ngIf="getOrders().length == 0">
-  <td colspan="5">There are no orders</td>
-  </tr>
-  <ng-template ngFor let-o [ngForOf]="getOrders()">
-  <tr>
-  <td>{{o.name}}</td><td>{{o.zip}}</td>
-  <th>Product</th><th>Quantity</th>
-  <td>
-  <button class="btn btn-warning" (click)="markShipped(o)">
-  Ship
-  </button>
-  <button class="btn btn-danger" (click)="delete(o.id)">
-  Delete
-  </button>
-  </td>
-  </tr>
-  <tr *ngFor="let line of o.cart.lines">
-  <td colspan="2"></td>
-  <td>{{line.product.name}}</td>
-  <td>{{line.quantity}}</td>
-  </tr>
+    <tr *ngIf="(flats.length==0);else table">
+      <td colspan="8">There are no orders</td>
+    </tr>
+    <ng-template #table ngFor let-o [ngForOf]="getflats()">
+      
+        <tr>
+              <td>{{o.location}} {{o.street}} {{o.number}}</td>
+              <td>{{o.description}}</td>
+              <th scope="col">Title</th>
+              <th scope="col">Number</th>
+              <th scope="col" >Description</th>
+              <th scope="col">Price</th>
+              <th scope="col">Places</th>
+              <td>
+              <button class="btn btn-outline-danger" (click)="delete(o)">
+                  <span class="fa fa-trash-alt"></span>
+              </button>
+              </td>
+            </tr>
+            <tr *ngFor="let room of o.Rooms">
+            <td colspan="2"></td>
+            <td>{{room.title}}</td>
+            <td>{{room.number}}</td>
+            <td>{{room.description}}</td>
+            <td>{{room.price}}</td>
+            <td>{{room.number_of_free_rooms}}/{{room.number_of_rooms}}</td>
+            </tr>
+      
   </ng-template>
   </tbody>
-  <div class="form-inline pull-xs-left m-r-1">
+
+<div class="form-inline pull-xs-left mt-2" style="display: inline-block;">
     <select class="form-control" [value]="productsPerPage"
     (change)="changePageSize($event.target.value)">
     <option value="3">3 per Page</option>
@@ -37,12 +49,12 @@
     <option value="6">6 per Page</option>
     <option value="8">8 per Page</option>
     </select>
-    </div>
-    <div class="btn-group pull-xs-right">
+  </div>
+<div class="btn-group pull-xs-right ml-2">
     <button *ngFor="let page of pageNumbers" (click)="changePage(page)"
     class="btn btn-outline-primary" [class.active]="page == selectedPage">
     {{page}}
     </button>
-    </div>
-  </table> -->
+</div>
+  </table> 
   </div>
