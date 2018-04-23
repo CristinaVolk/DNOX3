@@ -5,5 +5,5 @@ export class Flat {
     public street?: String,
     public number?: String,
     public description?:String,
-    public rooms?:Room[]) { }
+    public Rooms?:Array<Room>) { }
 }
