@@ -10,29 +10,18 @@ const CONFIG = require('./../controllers/config.js');
 const UserController = require('./../controllers/userController.js');
 const Flat = require('./../controllers/databaseController').get().model('Flat');
 
-router.get('/roomAll/:flatId', async (req, res)=>{
-  const flatId=req.params.flatId;
-  console.log("Get the flat Id: ", flatId);
-  Flat
-       .findById(flatId)
-       .select('Rooms')
-        .exec( function(err, doc){
-          if (err){
-            console.log(err);
-            res
-               .status(500)
-               .json(err);
-          } else {
-            console.log('Returned socks', doc)
-                res
-                  .status(200)
-                  .json(doc.Rooms);
-              };
-});
+router.get('/roomAll/:flatId', UserController.isAuthentic, async (req, res)=>{
+  try{
+    var flatId = req.params.flatId;
+    let flat = await Flat.findById(flatId).select('Rooms');
+    if(!flat) res.json({success: false, message: "couldn't find the flat by its id"});
+    else res.json(flat.Rooms);
+      }  catch (err) {
+          res.json({success: false, message: "promise err"});
+      }
 });
 
 let AddRoom = (req, res, flat)=>{
-  console.log('bla bla');
   flat.Rooms.push({
     title:req.body.title,
     number:req.body.number,
@@ -51,65 +40,89 @@ let AddRoom = (req, res, flat)=>{
   })
 }
 
-router.post('/addRoom/:flatId', (req, res)=>{
-  const flatId = req.params.flatId;
-  console.log("Get the room Id: ", flatId);
-  Flat.findById(flatId)
-      .select('Rooms')
-      .exec((err, flat)=>{
-        if(err){
-          console.log(err);
-          res.status(500).json(err);
-        }else if(!flat){
-          res.status(404).json("Error finding the flat");
-        }
-        if(flat){
-          AddRoom(req, res, flat);
-        } else {
-          res.json("Error adding room");
-        }
-      });
+router.post('/addRoom/:flatId', UserController.isAuthentic, async (req, res)=>{
+  try{
+    var flatId = req.params.flatId;
+    let flat = await Flat.findById(flatId);
+    if(!flat) res.json({success: false, message: "couldn't find the flat by its id"});
+    else AddRoom(req, res, flat);
+      }  catch (err) {
+          res.json({success: false, message: "promise err"});
+      }
 });
 
+router.put('/updateRoom/:flatId/:roomId',UserController.isAuthentic, async (req, res) => {
+    try {
+        var flatId = req.params.flatId;
+        var roomId = req.params.roomId;
 
-router.delete('/deleteRoom/:flatId/:roomId', (req, res)=>{
-  const flatId=req.params.flatId;
-  const roomId=req.params.roomId;
-  var ReviewID;
-  console.log('GET the flatId давай по одному бля', flatId);
-  Flat
-       .findById(flatId)
-       .select('Rooms')
-        .exec( function(err, flat){ //var review = hotel.reviews.id(reviewId);
-          if(err) {
-            console.log("Error finding flat by Id");
-            res.status(404).json(err);
+        var title = req.body.title;
+        var number = req.body.number;
+        var description = req.body.description;
+        var price = req.body.price;
+        var number_of_rooms = req.body.number_of_rooms;
+        var number_of_free_rooms = req.body.number_of_free_rooms;
+
+        req.checkBody('title').optional();
+        req.checkBody('number').optional();
+        req.checkBody('description').optional();
+        req.checkBody('price').optional();
+        req.checkBody('number_of_rooms').optional();
+        req.checkBody('number_of_free_rooms').optional();
+
+        let errors = await req.validationErrors();
+
+        let flat = await Flat.findById(flatId);
+         if(!flat) {
+           res.json({success: false, message: "couldn't find the flat by its id"});
+       } else {
+           let Room=flat.Rooms.id(roomId);
+           if(!Room) res.json({success: false, message: "couldn't find the flat by its id"});
+        else {
+             Room.title=title;
+             Room.number=number;
+             Room.description=description;
+             Room.price=price;
+             Room.number_of_rooms=number_of_rooms;
+             Room.number_of_free_rooms=number_of_free_rooms;
+             flat.Rooms.forEach(function(item, i,arr){
+               console.log(flat.Rooms[i]);
+             });
+             flat.save(function(err, roomUpdated){
+               if(err){
+                 res.status(500)
+                 .json(err);
+               } else {
+                 roomUpdated.Rooms.forEach(function(item, i,arr){
+                   console.log(flat.Rooms[i]);
+                 });
+                 res.status(200)
+                 .json(roomUpdated.Rooms[roomUpdated.Rooms.length-1]);
+               }
+             });
+    }
+  }
+} catch (err) {
+        res.json({success: false, message: "promise err"});
+    }
+});
+
+      router.delete('/deleteRoom/:flatId/:roomId', UserController.isAuthentic, async (req, res) => {
+          try {
+              var flatId = req.params.flatId;
+              var roomId = req.params.roomId;
+
+              let flat = await Flat.findById(flatId);
+              if(!flat) res.json({success: false, message: "couldn't find the flat by its id"});
+                  await Flat.findByIdAndUpdate(flatId, {
+                      $pull:{
+                          "Rooms.id": roomId
+                      }
+                  });
+                  res.json({success: true});
+          } catch (err) {
+              res.json({success: false, message: "promise err"});
           }
-          else if (!flat) {
-            console.log("Error finding hotel");
-            res.status(404).json({"message" : "Hotel ID is not found in database "});
-          }
-          if (flat){
-            RoomID = flat.Rooms.id(roomId);
-            console.log(RoomID);
-            if(!RoomID){
-              res
-                .status(500)
-                .json("success:false");
-            }  else{
-              flat.Rooms.id(roomId).remove();
-              flat.save((err, roomUpdated)=>{
-                if(err){
-                  res.status(500)
-                  .json(err);
-                } else {
-                  res.status(200)
-                  .json(roomUpdated);
-                }
-              });
-            };
-          }
-        });
-      })
+      });
 
 module.exports = router;
