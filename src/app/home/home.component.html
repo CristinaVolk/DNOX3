@@ -11,11 +11,11 @@
   </thead>
   <tbody>
     <tr *ngIf="(flats.length==0);else table">
-      <td colspan="8">There are no orders</td>
+      <td colspan="8">There are no flats</td>
     </tr>
     <ng-template #table ngFor let-o [ngForOf]="getflats()">
       
-        <tr>
+        <tr [ngClass]="{'invisible': isEmpty(o)}">
               <td>{{o.location}} {{o.street}} {{o.number}}</td>
               <td>{{o.description}}</td>
               <th scope="col">Title</th>
@@ -24,7 +24,10 @@
               <th scope="col">Price</th>
               <th scope="col">Places</th>
               <td>
-              <button class="btn btn-outline-danger" (click)="delete(o)">
+              <button class="btn btn-sm btn-outline-primary" [routerLink]="['/updateflat']" >
+                  <span class="fa fa-edit"></span>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="delete(o)">
                   <span class="fa fa-trash-alt"></span>
               </button>
               </td>
@@ -36,12 +39,12 @@
             <td>{{room.description}}</td>
             <td>{{room.price}}</td>
             <td><div class="free-rooms">
-                <button class="btn btn-link btn-primary" (click)="">
-                    <span class="fa fa-angle-up"></span>
+                <button [ngClass]="{'disabled': isZero(room)}" class="btn btn-sm btn-outline-primary mybtn" (click)="decrement(room,o)">
+                    <span class="fa fa-angle-down"></span>
                 </button>
               {{room.number_of_free_rooms}}
-              <button class="btn btn-link btn-primary" (click)="">
-                  <span class="fa fa-angle-down"></span>
+              <button [ngClass]="{'disabled': isFull(room)}" class="btn btn-sm btn-outline-primary mybtn" (click)="increment(room,o)">
+                  <span class="fa fa-angle-up"></span>
               </button>
             </div>/{{room.number_of_rooms}}</td>
             </tr>

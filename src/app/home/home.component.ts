@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FlatRepository} from '../models/flat.repository';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -28,9 +29,38 @@ loadFlats(){
  getflats(): any[] {
   if(this.flats!=null){
     let pageIndex = (this.selectedPage - 1) * this.productsPerPage;
+    console.log(this.flats.slice(pageIndex, pageIndex + this.productsPerPage));
     return this.flats.slice(pageIndex, pageIndex + this.productsPerPage); 
   }
 } 
+
+increment(room,flat){
+  if(room.number_of_free_rooms<room.number_of_rooms){
+    room.number_of_free_rooms++;
+    
+  }
+}
+
+decrement(room,flat){
+  if(room.number_of_free_rooms>0){
+    room.number_of_free_rooms--;
+  }
+}
+
+isZero(room){
+  if(room.number_of_free_rooms==0) return true;
+  else return false;
+}
+
+isFull(room){
+  if(room.number_of_free_rooms==room.number_of_rooms) return true;
+  else return false;
+}
+
+isEmpty(o){
+  if(o==false) return true;
+  else return false;
+}
 
 onNumberChanged(event){
   console.log(event);

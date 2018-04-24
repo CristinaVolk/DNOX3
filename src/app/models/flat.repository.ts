@@ -24,8 +24,11 @@ export class FlatRepository {
         return this.http.post('/flat', flat); 
     }
 
-    updateFlat(flat: any){
-        return this.http.put('/flat/'+flat._id, flat); 
+    updateFlat(flat: any): Observable<any>{
+        return this.http.put('/flat/'+flat._id, flat).map(data => {
+            console.log(data);
+            return data;
+        });; 
     }
 
     deleteFlat(flat: any): Observable<any>{

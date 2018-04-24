@@ -1,3 +1,31 @@
 .free-rooms {
     display: inline-block;
 }
+
+.mybtn {
+    display: inline;
+    border-width: 0 !important;
+}
+
+.mybtn:hover {
+    background-color: white;
+    color: #000000;
+    border-width: 0;
+}
+
+.mybtn:active {
+    border-width: 0 !important;
+    border-color: white !important;
+}
+
+.disabled {
+    color: #4b4b4b;
+}
+
+.mybtn:focus {
+    box-shadow: 0 0 0 0 !important;
+}
+
+.invisible {
+    display: none;
+}
