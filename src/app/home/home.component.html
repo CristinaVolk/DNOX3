@@ -35,7 +35,15 @@
             <td>{{room.number}}</td>
             <td>{{room.description}}</td>
             <td>{{room.price}}</td>
-            <td>{{room.number_of_free_rooms}}/{{room.number_of_rooms}}</td>
+            <td><div class="free-rooms">
+                <button class="btn btn-link btn-primary" (click)="">
+                    <span class="fa fa-angle-up"></span>
+                </button>
+              {{room.number_of_free_rooms}}
+              <button class="btn btn-link btn-primary" (click)="">
+                  <span class="fa fa-angle-down"></span>
+              </button>
+            </div>/{{room.number_of_rooms}}</td>
             </tr>
       
   </ng-template>

@@ -32,6 +32,11 @@ loadFlats(){
   }
 } 
 
+onNumberChanged(event){
+  console.log(event);
+  console.log(this.flats);
+}
+
 delete(flat) {
   this.rep.deleteFlat(flat).subscribe(res=>{
     console.log(res);

@@ -21,6 +21,9 @@ import { TokenInterceptor } from './auth/token.interceptor';
 import { AuthService } from './auth/auth.service';
 import { AddFlatComponent } from './add-flat/add-flat.component';
 
+import { InlineEditorModule } from '@qontu/ngx-inline-editor';
+
+
 
 const appRoutes: Routes =[
   { 
@@ -57,7 +60,8 @@ const appRoutes: Routes =[
     AddFlatComponent
   ],
   imports: [
-    BrowserModule, RouterModule.forRoot(appRoutes),FormsModule,ReactiveFormsModule,HttpClientModule
+    BrowserModule, RouterModule.forRoot(appRoutes),FormsModule,ReactiveFormsModule,HttpClientModule,
+    InlineEditorModule
   ],
   providers: [UserRepository,FlatRepository,AuthService,
     {
