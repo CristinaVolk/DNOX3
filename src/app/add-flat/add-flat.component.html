@@ -18,13 +18,13 @@
          <div class="form-group row">
             <label class="col-lg-3 col-form-label form-control-label">Number</label>
             <div class="col-lg-7">
-                <input class="form-control" type="text" name="number" [(ngModel)]="flat.number" required/>
+                <input  class="form-control" type="number" name="number" [(ngModel)]="flat.number" required/>
             </div>
          </div>
           <div class="form-group row">
               <label class="col-lg-3 col-form-label form-control-label">Description</label>
               <div class="col-lg-7">
-                  <textarea class="form-control" type="text"  name="description" [(ngModel)]="flat.description" required></textarea>
+                  <textarea class="form-control" type="text"  name="description" [(ngModel)]="flat.description" ></textarea>
               </div>
           </div>
           
@@ -38,13 +38,13 @@
                 <label class="col-lg-3 col-form-label form-control-label" for="title">Title</label>
                 <input class="form-control" type="text" name="title{{index}}" [(ngModel)]="rooms[index].title" required/>
                 <label class="col-lg-3 col-form-label form-control-label" for="number">Number</label>
-                <input class="form-control" type="text" name="number{{index}}" [(ngModel)]="rooms[index].number" required/>
+                <input   class="form-control" type="number" name="number{{index}}" [(ngModel)]="rooms[index].number" />
                 <label class="col-lg-3 col-form-label form-control-label" for="description">Description</label>
-                <input class="form-control" type="text"  name="description{{index}}" [(ngModel)]="rooms[index].description" required/>
+                <input class="form-control" type="text"  name="description{{index}}" [(ngModel)]="rooms[index].description" />
                 <label class="col-lg-3 col-form-label form-control-label" for="price">Price</label>
-                <input class="form-control" type="text"  name="price{{index}}" [(ngModel)]="rooms[index].price" required/>
+                <input class="form-control" type="number"  name="price{{index}}" [(ngModel)]="rooms[index].price" />
                 <label class="col-lg-3 col-form-label form-control-label" for="places">Places</label>
-                <input class="form-control" type="text" name="places{{index}}" [(ngModel)]="rooms[index].number_of_rooms" required/>
+                <input  class="form-control" type="number" name="places{{index}}" [(ngModel)]="rooms[index].number_of_rooms" required/>
                 <button *ngIf="isLast(room)==true" class="btn btn-sm btn-outline-primary mt-2 mr-1" (click)="addRoom()"><span class="fa fa-plus"></span> Add Room</button>
                 <button  class="btn btn-sm btn-outline-danger mt-2 " (click)="deleteRoom(index)"><span class="fa fa-trash-alt"></span></button>                
             </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import {Room} from '../models/room.model';
 import {Flat} from '../models/flat.model';
 import {FlatRepository} from '../models/flat.repository';
@@ -62,3 +62,4 @@ export class AddFlatComponent implements OnInit {
   }
 
 }
+

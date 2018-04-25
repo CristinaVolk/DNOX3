@@ -18,7 +18,7 @@
         <tr [ngClass]="{'invisible': isEmpty(o)}">
               <td><inline-editor class="inlbl" type="text" [(ngModel)]="o.location" (onSave)="saveEditable(o)" name="editableText1" size="8"></inline-editor> 
                 <inline-editor class="inlbl" type="text" [(ngModel)]="o.street" (onSave)="saveEditable(o)" name="editableText1" size="8"></inline-editor>     
-                <inline-editor class="inlbl" type="text" [(ngModel)]="o.number" (onSave)="saveEditable(o)" name="editableText1" size="8"></inline-editor>
+                <inline-editor class="inlbl" type="number" [(ngModel)]="o.number" (onSave)="saveEditable(o)" name="editableText1" size="8"></inline-editor>
               </td>
                 <td class="descr">
                 <inline-editor class="inlbl" type="text" [(ngModel)]="o.description" (onSave)="saveEditable(o)" name="editableText1" size="8"></inline-editor></td>
@@ -39,13 +39,13 @@
                   <inline-editor class="inlbl" type="text" [(ngModel)]="room.title" (onSave)="saveEditable(o)" name="editableText1" size="8"></inline-editor>
                 </td>
               <td>
-                  <inline-editor class="inlbl" type="text" [(ngModel)]="room.number" (onSave)="saveEditable(o)" name="editableText1" size="8"></inline-editor>
+                  <inline-editor class="inlbl" type="number" [(ngModel)]="room.number" (onSave)="saveEditable(o)" name="editableText1" size="8"></inline-editor>
               </td>
               <td>
                   <inline-editor class="inlbl" type="text" [(ngModel)]="room.description" (onSave)="saveEditable(o)" name="editableText1" size="8"></inline-editor>
               </td>
               <td>
-                  <inline-editor class="inlbl" type="text" [(ngModel)]="room.price" (onSave)="saveEditable(o)" name="editableText1" size="8"></inline-editor>                
+                  <inline-editor class="inlbl" type="number" [(ngModel)]="room.price" (onSave)="saveEditable(o)" name="editableText1" size="8"></inline-editor>                
               </td>
               <td style="width:130px;"><div class="free-rooms">
                   <button [ngClass]="{'disabled': isZero(room)}" class="btn btn-sm btn-outline-primary mybtn" (click)="decrement(room,o)">
@@ -55,7 +55,7 @@
                 <button [ngClass]="{'disabled': isFull(room)}" class="btn btn-sm btn-outline-primary mybtn" (click)="increment(room,o)">
                     <span class="fa fa-angle-up"></span>
                 </button>
-              </div>/ <inline-editor class="inlbl" type="text" [(ngModel)]="room.number_of_rooms" (onSave)="saveEditable(o)" name="editableText1" size="8"></inline-editor>                
+              </div>/ <inline-editor class="inlbl" type="number" [(ngModel)]="room.number_of_rooms" (onSave)="saveEditable(o)" name="editableText1" size="8"></inline-editor>                
             </td>
               <td>
                   <button class="btn btn-sm btn-outline-danger" (click)="deleteRoom(o,room)" ><span class="fa fa-trash-alt"></span></button>
@@ -71,16 +71,16 @@
                       <input class="form-control" type="text" [(ngModel)]="newRoom.title" />
                   </td>
                   <td [ngClass]="{'invisible': !isAdding(o)}">
-                      <input class="form-control" type="text" [(ngModel)]="newRoom.number" />
+                      <input class="form-control" type="number" [(ngModel)]="newRoom.number" />
                   </td>
                   <td [ngClass]="{'invisible': !isAdding(o)}" >
                       <input class="form-control" type="text" [(ngModel)]="newRoom.description"/>
                   </td>
                   <td [ngClass]="{'invisible': !isAdding(o)}">
-                      <input class="form-control" type="text" [(ngModel)]="newRoom.price" />
+                      <input class="form-control" type="number" [(ngModel)]="newRoom.price" />
                   </td>
                   <td [ngClass]="{'invisible': !isAdding(o)}">
-                      <input class="form-control" type="text" [(ngModel)]="newRoom.number_of_rooms"/>
+                      <input class="form-control" type="number" [(ngModel)]="newRoom.number_of_rooms"/>
                   </td>
                   <td [ngClass]="{'invisible': !isAdding(o)}">
                   <button class="btn btn-sm btn-outline-primary mb-1" (click)="addRoom(o)" ><span class="fa fa-check"></span></button>

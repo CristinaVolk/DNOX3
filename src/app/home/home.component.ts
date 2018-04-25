@@ -159,3 +159,4 @@ get pageNumbers(): any[] {
   }
 
 }
+
