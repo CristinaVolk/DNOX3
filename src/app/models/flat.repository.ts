@@ -15,7 +15,6 @@ export class FlatRepository {
 
     getFlats(): Observable<any> { 
         return this.http.get('/flats').map(data => {
-            console.log(data);
             return data;
         });
     }
@@ -24,16 +23,22 @@ export class FlatRepository {
         return this.http.post('/flat', flat); 
     }
 
-    updateFlat(flat: any): Observable<any>{
-        return this.http.put('/flat/'+flat._id, flat).map(data => {
+    updateFlat(flat: any){
+        console.log(flat);
+        this.http.put('/flat/'+flat._id, flat).subscribe(data => {
             console.log(data);
+            return data;
+        });; 
+    }
+
+    updateRoom(flat: any, room: any): Observable<any>{
+        return this.http.put('/updateRoom/'+flat._id+'/'+room._id, room).map(data => {
             return data;
         });; 
     }
 
     deleteFlat(flat: any): Observable<any>{
         return this.http.delete('/flat/'+flat._id).map(data => {
-            console.log(data);
             return data;
         });; 
     }

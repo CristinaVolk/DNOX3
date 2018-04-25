@@ -29,3 +29,16 @@
 .invisible {
     display: none;
 }
+
+.inlbl {
+    display: inline-block;
+}
+
+input.form-control {
+    width: 130px;
+    margin-left: -10px;
+}
+
+.descr {
+    width: 180px;
+}

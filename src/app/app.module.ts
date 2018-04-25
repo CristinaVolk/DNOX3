@@ -22,7 +22,7 @@ import { AuthService } from './auth/auth.service';
 import { AddFlatComponent } from './add-flat/add-flat.component';
 
 import { InlineEditorModule } from '@qontu/ngx-inline-editor';
-import { UpdateFlatComponent } from './update-flat/update-flat.component';
+
 
 
 
@@ -38,11 +38,6 @@ const appRoutes: Routes =[
       component: SignupComponent,
       data: { title: 'Sign Up' }
   },
-  { 
-    path: 'updateflat', 
-    component: UpdateFlatComponent,
-    data: { title: 'Edit flat' }
-},
   { 
     path: 'addflat', 
     component: AddFlatComponent,
@@ -64,8 +59,7 @@ const appRoutes: Routes =[
     NavbarComponent,
     HomeComponent,
     EqualValidator,
-    AddFlatComponent,
-    UpdateFlatComponent
+    AddFlatComponent
   ],
   imports: [
     BrowserModule, RouterModule.forRoot(appRoutes),FormsModule,ReactiveFormsModule,HttpClientModule,
