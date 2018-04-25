@@ -109,7 +109,6 @@ const FlatSchema = new Schema({
 
 const connectWithDB = (connection) => {
   const Flat = connection.model('Flat', FlatSchema, 'Flat');
-
 }
  module.exports = connectWithDB;
 >>>>>>> master
