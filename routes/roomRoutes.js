@@ -94,7 +94,7 @@ router.put('/updateRoom/:flatId/:roomId', async (req, res) => {
                     "Rooms": rooms
                 }
               })
-              res.json({"success:true"});
+              res.json({success:true});
 }
 }catch (err) {
         res.json({success: false, message: "promise err"});
