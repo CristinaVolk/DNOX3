@@ -22,7 +22,7 @@ const Flat = require('./../controllers/databaseController').get().model('Flat');
   })
 }); */
 router.get('/flats', function(req, res, next) {
-  Flat.find({}).exec(function (err, products) {
+  Flat.find({}).sort({ data: -1 }).exec(function (err, products) {
       if (err) return next(err);
       res.json(products);
   });    

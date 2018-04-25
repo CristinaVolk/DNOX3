@@ -23,7 +23,7 @@ constructor(private rep: FlatRepository) {
 
 loadFlats(){
   this.rep.getFlats().subscribe(res=>{
-    this.flats=res.reverse();
+    this.flats=res;
     }
   );
 }

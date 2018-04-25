@@ -5,5 +5,6 @@ export class Flat {
     public street?: String,
     public number?: String,
     public description?:String,
-    public Rooms?:Array<Room>) { }
+    public Rooms?:Array<Room>,
+    public data?: Date) { }
 }
