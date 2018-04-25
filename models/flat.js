@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-//var bcrypt = require('bcryptjs');
 let Schema = mongoose.Schema;
 const RoomSchema = new Schema({
   title:String,
@@ -7,7 +6,11 @@ const RoomSchema = new Schema({
   description:String,
   price:Number,
   number_of_rooms:Number,
-  number_of_free_rooms:Number
+
+  number_of_free_rooms:Number,
+  data:{
+    type:Date
+  }
 });
 const FlatSchema = new Schema({
   location:{
@@ -26,11 +29,16 @@ const FlatSchema = new Schema({
     type: String,
     required: true,
   },
-  Rooms:[RoomSchema]
-});
 
+  Rooms:[RoomSchema],
+  data:{
+    type:Date,
+    default:Date.now()
+  }
+});
 
 const connectWithDB = (connection) => {
   const Flat = connection.model('Flat', FlatSchema, 'Flat');
+
 }
  module.exports = connectWithDB;

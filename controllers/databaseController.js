@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 const userModel = require('./../models/user');
+
+const flatModel = require('./../models/flat');
+const CONFIG=require('./config');
+
 const flatModel = require('./../models/flat');
 const CONFIG=require('./config');
 
@@ -23,8 +27,11 @@ let open = function() {
                   console.log("error", "DB connection error");
               });
               mongoose.Promise = global.Promise;
+
+              userModel(_connection);
+
               flatModel(_connection);
-              userModel(_connection); //show me the problem
+
 
 };
 
