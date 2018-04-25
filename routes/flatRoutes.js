@@ -10,6 +10,13 @@ const CONFIG = require('./../controllers/config.js');
 const UserController = require('./../controllers/userController.js');
 const Flat = require('./../controllers/databaseController').get().model('Flat');
 
+router.get('/flats', function(req, res, next) {
+Flat.find({}).sort({ data: -1 }).exec(function (err, products) {
+if (err) return next(err);
+res.json(products);
+});
+});
+
 router.post('/flat',  (req, res) => {
 
     var location = req.body.location;
@@ -22,7 +29,7 @@ router.post('/flat',  (req, res) => {
   req.checkBody('street', 'Street is required').notEmpty();
   req.checkBody('number', 'Number is required').notEmpty();
   req.checkBody('description').optional();
-  req.checkBody('Rooms', 'List of rooms is required').notEmpty();
+  req.checkBody('Rooms', 'List of rooms is required').optional();
 
   let errors = req.validationErrors();
 
@@ -48,10 +55,9 @@ router.post('/flat',  (req, res) => {
           });
         }
       });
-//update the flat
-      router.put('/flat/:flatId' , UserController.isAuthentic , (req, res) => {
-        console.log(req.body);
-        const id = req.params.flatId;
+
+      router.put('/flat/:id',UserController.isAuthentic,  (req, res) => {
+        const id = req.params.id;
         req.checkBody('location').optional();
         req.checkBody('street').optional();;
         req.checkBody('number').optional();
@@ -86,7 +92,6 @@ router.post('/flat',  (req, res) => {
       router.delete('/deleteFlat/:flatId', UserController.isAuthentic, async (req, res) => {
           try {
               var flatId = req.params.flatId;
-
               await Flat.findByIdAndRemove(flatId);
                   res.json({success: true});
           } catch (err) {

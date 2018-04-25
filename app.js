@@ -12,10 +12,9 @@ databaseController.open();
 
 const book = require('./routes/book');
 const flatRoutes = require('./routes/flatRoutes');
-<<<<<<< HEAD
-=======
+
 const roomRoutes = require('./routes/roomRoutes');
->>>>>>> master
+
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -25,10 +24,9 @@ app.use(express.static(path.join(__dirname, 'dist')));
 app.use('/books', express.static(path.join(__dirname, 'dist')));
 app.use('/', book);
 app.use('/', flatRoutes);
-<<<<<<< HEAD
-=======
+
 app.use('/', roomRoutes);
->>>>>>> master
+
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
