@@ -10,6 +10,24 @@ const CONFIG = require('./../controllers/config.js');
 const UserController = require('./../controllers/userController.js');
 const Flat = require('./../controllers/databaseController').get().model('Flat');
 
+//get all flats
+/* router.get('/flats', async (req, res)=>{
+  Flat.find({}, (err, result)=>{
+    if(err){
+      console.log("Error finding");
+      res.status(500).json(err);
+    }else{
+       res.status(200).json(result);
+    }
+  })
+}); */
+router.get('/flats', function(req, res, next) {
+  Flat.find({}).sort({ data: -1 }).exec(function (err, products) {
+      if (err) return next(err);
+      res.json(products);
+  });    
+});
+//create a flat
 router.post('/flat',  (req, res) => {
 
     var location = req.body.location;
