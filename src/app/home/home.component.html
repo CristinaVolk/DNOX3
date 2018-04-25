@@ -47,7 +47,7 @@
               <td>
                   <inline-editor class="inlbl" type="text" [(ngModel)]="room.price" (onSave)="saveEditable(o)" name="editableText1" size="8"></inline-editor>                
               </td>
-              <td><div class="free-rooms">
+              <td style="width:130px;"><div class="free-rooms">
                   <button [ngClass]="{'disabled': isZero(room)}" class="btn btn-sm btn-outline-primary mybtn" (click)="decrement(room,o)">
                       <span class="fa fa-angle-down"></span>
                   </button>
