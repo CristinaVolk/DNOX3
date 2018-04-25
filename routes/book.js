@@ -106,7 +106,7 @@ router.post('/login', (req, res)=>{
 });
 });
 
-
+ 
 
 
 router.get('/me', UserController.isAuthentic, function(req, res, next) {

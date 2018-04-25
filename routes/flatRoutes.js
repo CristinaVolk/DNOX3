@@ -65,7 +65,8 @@ router.post('/flat',  (req, res) => {
         }
       });
 //update the flat
-      router.put('/flat/:flatId', UserController.isAuthentic, (req, res) => {
+      router.put('/flat/:flatId' , UserController.isAuthentic , (req, res) => {
+        console.log(req.body);
         const id = req.params.flatId;
         req.checkBody('location').optional();
         req.checkBody('street').optional();;
