@@ -10,39 +10,34 @@ const CONFIG = require('./../controllers/config.js');
 const UserController = require('./../controllers/userController.js');
 const Flat = require('./../controllers/databaseController').get().model('Flat');
 
-
-/*router.get('/flats', async (req, res)=>{
-  await res.send('Get all flats');
-});*/
-
-
 router.post('/flat',  (req, res) => {
 
-  var location = req.body.location;
-  var street = req.body.street;
-  var number = req.body.number;
-  var description = req.body.description;
-  var listOfRooms = req.body.listOfRooms;
+    var location = req.body.location;
+    var street = req.body.street;
+    var number = req.body.number;
+    var description = req.body.description;
+    var Rooms = req.body.Rooms;
 
   req.checkBody('location', 'Location is required').notEmpty();
   req.checkBody('street', 'Street is required').notEmpty();
   req.checkBody('number', 'Number is required').notEmpty();
   req.checkBody('description').optional();
-  req.checkBody('listOfRooms', 'List of rooms is required').notEmpty();
+  req.checkBody('Rooms', 'List of rooms is required').notEmpty();
 
   let errors = req.validationErrors();
+
   if (errors){
     console.log(errors);
        }
       else
        {
-         console.log("aaa")
           let user =  new Flat({
           location,
           street,
           number,
           description,
-          listOfRooms}).save((err, result)=>{
+          Rooms,
+          data:Date.now()}).save((err, result)=>{
             if (err) {
               console.log(err);
               return;
@@ -60,7 +55,7 @@ router.post('/flat',  (req, res) => {
         req.checkBody('street').optional();;
         req.checkBody('number').optional();
         req.checkBody('description').optional();
-        req.checkBody('listOfRooms').optional();
+        req.checkBody('Rooms').optional();
 
         let errors = req.validationErrors();
         if (errors){
@@ -73,8 +68,7 @@ router.post('/flat',  (req, res) => {
           if(req.body.street) fieldsToChange.street = req.body.street;
           if(req.body.number) fieldsToChange.number = req.body.number;
           if(req.body.description) fieldsToChange.description = req.body.description;
-          if(req.body.listOfRooms) fieldsToChange.listOfRooms = req.body.listOfRooms;
-
+          if(req.body.Rooms) fieldsToChange.listOfRooms = req.body.Rooms;
 
           Flat.findByIdAndUpdate(id, {
             $set: fieldsToChange
@@ -86,6 +80,17 @@ router.post('/flat',  (req, res) => {
             }
           })
         }
+      });
+
+      router.delete('/deleteFlat/:flatId', UserController.isAuthentic, async (req, res) => {
+          try {
+              var flatId = req.params.flatId;
+
+              await Flat.findByIdAndRemove(flatId);
+                  res.json({success: true});
+          } catch (err) {
+              res.json({success: false, message: "promise err"});
+          }
       });
 
 module.exports = router;
