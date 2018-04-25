@@ -9,6 +9,9 @@ import { EqualValidator } from './signup/signup.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UserRepository } from './models/user.repository'
 import { User } from './models/user.model';
+import { FlatRepository } from './models/flat.repository'
+import { Flat } from './models/flat.model';
+import { Room } from './models/room.model';
 
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
@@ -16,6 +19,13 @@ import { HomeComponent } from './home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { TokenInterceptor } from './auth/token.interceptor';
 import { AuthService } from './auth/auth.service';
+import { AddFlatComponent } from './add-flat/add-flat.component';
+
+import { InlineEditorModule } from '@qontu/ngx-inline-editor';
+
+
+
+
 
 const appRoutes: Routes =[
   { 
@@ -28,6 +38,11 @@ const appRoutes: Routes =[
       component: SignupComponent,
       data: { title: 'Sign Up' }
   },
+  { 
+    path: 'addflat', 
+    component: AddFlatComponent,
+    data: { title: 'Add Flat' }
+},
   { 
       path: 'login', 
       component: LoginComponent,
@@ -43,12 +58,14 @@ const appRoutes: Routes =[
     SignupComponent,
     NavbarComponent,
     HomeComponent,
-    EqualValidator
+    EqualValidator,
+    AddFlatComponent
   ],
   imports: [
-    BrowserModule, RouterModule.forRoot(appRoutes),FormsModule,ReactiveFormsModule,HttpClientModule
+    BrowserModule, RouterModule.forRoot(appRoutes),FormsModule,ReactiveFormsModule,HttpClientModule,
+    InlineEditorModule
   ],
-  providers: [UserRepository,AuthService,
+  providers: [UserRepository,FlatRepository,AuthService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

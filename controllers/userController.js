@@ -23,7 +23,6 @@ module.exports.isAuthentic = (req,res,next) => {
   }
   catch (err) {
     res.sendStatus(403);
-<<<<<<< Updated upstream
   } */
   console.log(req.headers);
   var token = req.headers['authorization'];

@@ -11,7 +11,7 @@ const CONFIG = require('./../controllers/config.js');
 const UserController = require('./../controllers/userController.js');
 const User = require('./../controllers/databaseController').get().model('User');
 
-const {isAuthentic} = require('./../controllers/userController.js');
+//const {isAuthentic} = require('./../controllers/userController.js');
 
 
 
@@ -106,10 +106,10 @@ router.post('/login', (req, res)=>{
 });
 });
 
+ 
 
 
-
-router.get('/me', isAuthentic, function(req, res, next) {
+router.get('/me', UserController.isAuthentic, function(req, res, next) {
 
 
   User.findById(req.userId, { password: 0 }, function (err, user) {
@@ -118,7 +118,7 @@ router.get('/me', isAuthentic, function(req, res, next) {
     else return res.status(200).send(user);
   });
 });
-}
+
 
 router.get('/logout', function(req, res) {
   res.status(200).send({ auth: false, token: null });
