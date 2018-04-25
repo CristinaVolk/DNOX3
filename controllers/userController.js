@@ -6,6 +6,7 @@ const CONFIG = require('./config.js');
 
 
 module.exports.isAuthentic = (req,res,next) => {
+
   console.log(req.headers);
   var token = req.headers['authorization'];
   console.log(req.headers);

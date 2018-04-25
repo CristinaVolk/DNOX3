@@ -48,9 +48,10 @@ router.post('/flat',  (req, res) => {
           });
         }
       });
-
-      router.put('/flat/:id',/*isAuthentic, isAdmin,*/ (req, res) => {
-        const id = req.params.id;
+//update the flat
+      router.put('/flat/:flatId' , UserController.isAuthentic , (req, res) => {
+        console.log(req.body);
+        const id = req.params.flatId;
         req.checkBody('location').optional();
         req.checkBody('street').optional();;
         req.checkBody('number').optional();

@@ -6,6 +6,7 @@ const RoomSchema = new Schema({
   description:String,
   price:Number,
   number_of_rooms:Number,
+
   number_of_free_rooms:Number,
   data:{
     type:Date
@@ -28,6 +29,7 @@ const FlatSchema = new Schema({
     type: String,
     required: true,
   },
+
   Rooms:[RoomSchema],
   data:{
     type:Date,
