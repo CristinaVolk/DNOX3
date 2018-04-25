@@ -40,7 +40,7 @@ router.post('/flat',  (req, res) => {
   req.checkBody('street', 'Street is required').notEmpty();
   req.checkBody('number', 'Number is required').notEmpty();
   req.checkBody('description').optional();
-  req.checkBody('Rooms', 'List of rooms is required').notEmpty();
+  req.checkBody('Rooms', 'List of rooms is required').optional();
 
   let errors = req.validationErrors();
 
