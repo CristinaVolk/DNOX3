@@ -4,8 +4,6 @@ const userModel = require('./../models/user');
 const flatModel = require('./../models/flat');
 const CONFIG=require('./config');
 
-const flatModel = require('./../models/flat');
-const CONFIG=require('./config');
 
 let _connection = null;
 
