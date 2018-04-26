@@ -10,24 +10,13 @@ const CONFIG = require('./../controllers/config.js');
 const UserController = require('./../controllers/userController.js');
 const Flat = require('./../controllers/databaseController').get().model('Flat');
 
-//get all flats
-/* router.get('/flats', async (req, res)=>{
-  Flat.find({}, (err, result)=>{
-    if(err){
-      console.log("Error finding");
-      res.status(500).json(err);
-    }else{
-       res.status(200).json(result);
-    }
-  })
-}); */
 router.get('/flats', function(req, res, next) {
-  Flat.find({}).sort({ data: -1 }).exec(function (err, products) {
-      if (err) return next(err);
-      res.json(products);
-  });    
+Flat.find({}).sort({ data: -1 }).exec(function (err, products) {
+if (err) return next(err);
+res.json(products);
 });
-//create a flat
+});
+
 router.post('/flat',  (req, res) => {
 
     var location = req.body.location;
@@ -66,10 +55,9 @@ router.post('/flat',  (req, res) => {
           });
         }
       });
-//update the flat
-      router.put('/flat/:flatId' , UserController.isAuthentic , (req, res) => {
-        console.log(req.body);
-        const id = req.params.flatId;
+
+      router.put('/flat/:id',UserController.isAuthentic,  (req, res) => {
+        const id = req.params.id;
         req.checkBody('location').optional();
         req.checkBody('street').optional();;
         req.checkBody('number').optional();
@@ -104,7 +92,6 @@ router.post('/flat',  (req, res) => {
       router.delete('/deleteFlat/:flatId', UserController.isAuthentic, async (req, res) => {
           try {
               var flatId = req.params.flatId;
-
               await Flat.findByIdAndRemove(flatId);
                   res.json({success: true});
           } catch (err) {
