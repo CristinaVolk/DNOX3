@@ -42,6 +42,7 @@ export class UserRepository {
 
     logout() {
         this.http.get('/logout').subscribe();
+        localStorage.removeItem('token');
     }
 
 }

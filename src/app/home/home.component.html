@@ -6,7 +6,7 @@
     <tr><th scope="col">Address</th>
       <th scope="col">Description</th>
       <th scope="col" colspan="5" >Rooms</th>
-      <th scope="col">Actions</th>
+      <th *ngIf="userRepository.selectedUser != null" scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -57,14 +57,14 @@
                 </button>
               </div>/ <inline-editor class="inlbl" type="number" [(ngModel)]="room.number_of_rooms" (onSave)="saveEditable(o)" name="editableText1" size="8"></inline-editor>                
             </td>
-              <td>
-                  <button *ngIf="userRepository.selectedUser != null" class="btn btn-sm btn-outline-danger" (click)="deleteRoom(o,room)" ><span class="fa fa-trash-alt"></span></button>
+              <td *ngIf="userRepository.selectedUser != null">
+                  <button  class="btn btn-sm btn-outline-danger" (click)="deleteRoom(o,room)" ><span class="fa fa-trash-alt"></span></button>
               </td>
               </tr>
-              <tr [ngClass]="{'invisible': isEmpty(o)}">
+              <tr *ngIf="userRepository.selectedUser != null"  [ngClass]="{'invisible': isEmpty(o)}">
                   <td colspan="2"></td>
                   <td [ngClass]="{'invisible': isAdding(o)}" colspan="5">
-                    <button *ngIf="userRepository.selectedUser != null" class="btn btn-sm btn-outline-primary" (click)="startAdd(o)"><span class="fa fa-plus"></span> Add Room</button>
+                    <button class="btn btn-sm btn-outline-primary" (click)="startAdd(o)"><span class="fa fa-plus"></span> Add Room</button>
                   </td>
                <!--  <form [ngClass]="{'invisible': !isAdding}" role="form"  #myForm="ngForm" (ngSubmit)="onSubmit()"> -->
                   <td [ngClass]="{'invisible': !isAdding(o)}" >
