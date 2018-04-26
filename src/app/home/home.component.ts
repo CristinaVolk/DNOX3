@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FlatRepository} from '../models/flat.repository';
 import { NgClass } from '@angular/common';
 import {Room} from '../models/room.model';
+import { UserRepository } from '../models/user.repository';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,7 @@ public newRoom: Room = new Room();
 
 private flats: any[]= [];
 
-constructor(private rep: FlatRepository) {
+constructor(private rep: FlatRepository, private userRepository: UserRepository) {
   
 }
 
